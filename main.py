@@ -3,99 +3,100 @@
 from datetime import date
 
 
-#Definiranje rijecnika "Kolegij"
+#Definiranje rijecnika "Korisnik"
 
-kolegij = {
-    'ime_kolegija':None,
-    'ects_bodovi':None
-}
+korisnik = {}
 
 
 #Upis trazenih podataka od korisnika
 
-kolegij['ime_kolegija']=input('Unesite ime kolegija:')
-kolegij['ime_kolegija']=kolegij['ime_kolegija'].strip()
-kolegij['ime_kolegija']=kolegij['ime_kolegija'].upper()
-kolegij['ects_bodovi']=input('Unesite ECTS bodove za kolegij:')
-kolegij['ects_bodovi']=kolegij['ects_bodovi'].strip()
+korisnik['ime']=input('Unesite ime korisnika: ')
+korisnik['ime']=korisnik['ime'].strip()
+korisnik['ime']=korisnik['ime'].capitalize()
+
+korisnik['prezime']=input('Unesite prezime korisnika: ')
+korisnik['prezime']=korisnik['prezime'].strip()
+korisnik['prezime']=korisnik['prezime'].capitalize()
+
+korisnik['tel']=int(input('Unesite telefonski broj korisnika: '))
 
 
-#Definiranje rijecnika "Ispit"
+korisnik['email']=input('Unesite e-mail korisnika: ')
+korisnik['email']=korisnik['email'].strip()
 
-ispit = {
-    'kolegij':kolegij['ime_kolegija'],
-    'ects_bodovi':kolegij['ects_bodovi'],
-    'dan_ispita':None,
-    'mjesec_ispita':None,
-    'godina_ispita':None,
-    'datum':None
-}
+
+#Definiranje rijecnika "Artikli"
+
+artikl = {}
 
 
 #Upis trazenih podataka od korisnika
 
-ispit['dan_ispita']=input('Unesite dan ispita:')
-ispit['dan_ispita']=ispit['dan_ispita'].strip()
-ispit['dan_ispita']=int(ispit['dan_ispita'])
+artikl['naslov']=input('Unesite naslov prodajnog artikla: ')
+artikl['naslov']=artikl['naslov'].strip()
+artikl['naslov']=artikl['naslov'].capitalize()
+
+artikl['opis']=input('Unesite svoj opis prodajnog artikla: ')
+
+artikl['cijena']=float(input('Unesite cijenu prodajnog artikla (EUR): '))
+
+#Definiranje rijecnika "Artikli"
+
+prodaja = {}
+
+
+#Upis trazenih podataka od korisnika
+
+dan_isteka_prodaje=int(input('Unesite dan isteka prodaje artikla: '))
+
 
 #Provjera ispravnosti upisa
-while ispit['dan_ispita'] > 31:
-    print('Pogreska unosa, pokusajte ponovo.')
-    ispit['dan_ispita'] = input('Unesite dan ispita:')
-    ispit['dan_ispita'] = ispit['dan_ispita'].strip()
-    ispit['dan_ispita'] = int(ispit['dan_ispita'])
-    if ispit['dan_ispita']<=31:
+while dan_isteka_prodaje > 31:
+    print('Pogreska unosa, pokusajte ponovo: ')
+    dan_isteka_prodaje=int(input())
+    if dan_isteka_prodaje <= 31:
         break
 
-ispit['mjesec_ispita']=input('Unesite mjesec ispita:')
-ispit['mjesec_ispita']=ispit['mjesec_ispita'].strip()
-ispit['mjesec_ispita']=int(ispit['mjesec_ispita'])
+#Upis trazenih podataka od korisnika
+
+mjesec_isteka_prodaje=int(input('Unesite mjesec isteka prodaje artikla: '))
 
 #Provjera ispravnosti upisa
-while ispit['mjesec_ispita'] > 12:
-    print('Pogreska unosa, pokusajte ponovo.')
-    ispit['mjesec_ispita'] = input('Unesite mjesec ispita:')
-    ispit['mjesec_ispita'] = ispit['mjesec_ispita'].strip()
-    ispit['mjesec_ispita'] = int(ispit['mjesec_ispita'])
-    if ispit['mjesec_ispita']<=12:
+while mjesec_isteka_prodaje > 12:
+    print('Pogreska unosa, pokusajte ponovo: ')
+    mjesec_isteka_prodaje = int(input())
+    if mjesec_isteka_prodaje<=12:
         break
 
-ispit['godina_ispita']=input('Unesite godinu ispita:')
-ispit['godina_ispita']=ispit['godina_ispita'].strip()
-ispit['godina_ispita']=int(ispit['godina_ispita'])
+#Upis trazenih podataka od korisnika
+
+godina_isteka_prodaje=int(input('Unesite godinu isteka prodaje artikla: '))
 
 
 #Definiranje datuma od unesenih podataka
 
-ispit['datum']=date(ispit['godina_ispita'],ispit['mjesec_ispita'],ispit['dan_ispita'])
+prodaja['datum']=date(godina_isteka_prodaje, mjesec_isteka_prodaje, dan_isteka_prodaje)
 
 
-#Definiranje rijecnika "Student"
+#Upisivanje rijecnika u rijecnik iz kojeg se cita
 
-student = {
-    'kolegij': ispit['kolegij'],
-    'ects_bodovi':ispit['ects_bodovi'],
-    'dan_ispita':ispit['dan_ispita'],
-    'mjesec_ispita':ispit['mjesec_ispita'],
-    'godina_ispita':ispit['godina_ispita'],
-    'datum':ispit['datum'],
-    'ime_studenta':None,
-    'prezime_studenta':None,
-}
+prodaja['artikl']=artikl
+prodaja['korisnik']=korisnik
 
 
-#Upis trazenih podataka od korisnika
+#Ispis unesenih podataka oglasa
 
-student['ime_studenta']=input('Unesite ime studenta:')
-student['ime_studenta']=student['ime_studenta'].strip()
-student['ime_studenta']=student['ime_studenta'].title()
-student['prezime_studenta']=input('Unesite prezime studenta:')
-student['prezime_studenta']=student['prezime_studenta'].strip()
-student['prezime_studenta']=student['prezime_studenta'].title()
+print('Informacije o prodajnom artiklu:')
+print('\t Naslov:', prodaja['artikl']['naslov'])
+print('\t Opis:', prodaja['artikl']['opis'])
+print('\t Cijena:', prodaja['artikl']['cijena'],'EUR')
 
+print('Datum isteka prodaje artikla:')
+print('\t Dan:', prodaja['datum'].day)
+print('\t Mjesec:', prodaja['datum'].month)
+print('\t Godina:', prodaja['datum'].year)
 
-#Ispis unesenih podataka
-
-print('Student',student['prezime_studenta'],student['ime_studenta'],'je prijavio ispit')
-print('iz kolegij',ispit['kolegij'],'koji nosi',ispit['ects_bodovi'],'ECTS bodova')
-print('i odrzat ce se:',ispit['datum'])
+print('Informacije o korisniku:')
+print('\t', prodaja['korisnik']['prezime'], prodaja['korisnik']['ime'])
+print('\t Telefon:', prodaja['korisnik']['tel'])
+print('\t E-mail:', prodaja['korisnik']['email'])
